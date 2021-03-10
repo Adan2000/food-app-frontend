@@ -6,18 +6,23 @@ let currentUser = {id:1}
 
 document.addEventListener('DOMContentLoaded', () => {
 
-
     //FETCHING REVIEWS
     function getReviews(){
         fetch(REVIEW)
         .then(resp => resp.json())
-        .then(resp => console.log(resp))
+        .then(reviews => {
+            reviews.forEach(review => {
+                buildReview(review)
+            })
+        })
     }
     getReviews()
     //SUBMIT FORM
     let submitForm = document.querySelector('.submit')
     //USER FORM
     let userForm = document.querySelector('.user-name')
+    //REVIEW POST
+    let main = document.querySelector('main')
 
     //SUBMIT EVENT LISTENTER
     submitForm.addEventListener('submit',submitF)
@@ -32,8 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "food_name": e.target.food.value,
             "food_review": e.target.review.value, 
         }
-        console.log(review)
-        // postReview(review)
+        postReview(review)
     }
     //SETTING USER VALUES
     function userF(e){
@@ -41,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
         let user = {
             "user_name": e.target.name.value
         }
-        console.log(e.target.name.value)
         saveUser(user)
     }
 
@@ -55,10 +58,12 @@ document.addEventListener('DOMContentLoaded', () => {
             body: JSON.stringify({review})//same as {review:review}
         })
         .then(res => res.json())
-        .then(console.log)
+        .then(review => {
+            buildReview(review)
+        })
         .catch(error => console.log(error))
     }
-
+    //POST (USER)
     function saveUser(user){
         fetch(USER_URL, {
             method: 'POST',
@@ -68,8 +73,38 @@ document.addEventListener('DOMContentLoaded', () => {
             body: JSON.stringify(user)
         })
         .then(res => res.json())
-        .then(console.log)
         .catch(error => console.log(error))
+    }
+
+    //DOM REVIEW POST
+    function buildReview(review){
+        let form = document.createElement('form')
+        let ul = document.createElement('ul')
+        let rName = document.createElement('h2')
+        let fName = document.createElement('h3')
+        let rReview = document.createElement('textarea')
+        let userN = document.createElement('h4')
+
+        let delbtn = document.createElement('button')
+        let updbtn = document.createElement('button')
+
+        rName.innerText = review.restaurant_name
+        fName.innerText = review.food_name
+        rReview.innerText = review.food_review
+        userN.innerText = review.user.name
+
+        updbtn.innerText = 'UPDATE'
+        delbtn.innerText = 'DELETE'
+        form.className = 'Review'
+
+        ul.append(rName, fName, rReview, userN)
+
+        form.appendChild(ul)
+        form.append(updbtn, delbtn)
+
+        main.appendChild(form)
+
+
     }
 
 })
