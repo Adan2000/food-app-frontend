@@ -6,35 +6,46 @@ let currentUser = {id:1}
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    getReviews()
 
-
-z
+    //FETCHING REVIEWS
     function getReviews(){
         fetch(REVIEW)
         .then(resp => resp.json())
         .then(resp => console.log(resp))
     }
-     
-    //selecting form
+    getReviews()
+    //SUBMIT FORM
     let submitForm = document.querySelector('.submit')
-    //adding event listener
+    //USER FORM
+    let userForm = document.querySelector('.user-name')
+
+    //SUBMIT EVENT LISTENTER
     submitForm.addEventListener('submit',submitF)
-    
-    //setting the value
+    //USER EVENT LISTENER 
+    userForm.addEventListener('submit',userF)
+
+    //SETTING REVIEW VALUES
     function submitF(e){
         e.preventDefault()
         let review = {
             "restaurant_name": e.target.restaurant.value,
             "food_name": e.target.food.value,
             "food_review": e.target.review.value, 
-            "user_id": currentUser.id 
         }
         console.log(review)
-        postReview(review)
+        // postReview(review)
+    }
+    //SETTING USER VALUES
+    function userF(e){
+        e.preventDefault()
+        let user = {
+            "user_name": e.target.name.value
+        }
+        console.log(e.target.name.value)
+        saveUser(user)
     }
 
-    //POST
+    //POST (REVIEW)
     function postReview(review){
         fetch(REVIEW, {
             method: 'POST',
@@ -42,6 +53,19 @@ z
                 'Content-Type':'application/json',
             },
             body: JSON.stringify({review})//same as {review:review}
+        })
+        .then(res => res.json())
+        .then(console.log)
+        .catch(error => console.log(error))
+    }
+
+    function saveUser(user){
+        fetch(USER_URL, {
+            method: 'POST',
+            headers: {
+                'Content-type':'application/json',
+            },
+            body: JSON.stringify(user)
         })
         .then(res => res.json())
         .then(console.log)
