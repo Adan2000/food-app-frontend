@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
     getReviews()
+
     //SUBMIT FORM
     let submitForm = document.querySelector('.submit')
     //USER FORM
@@ -76,6 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => console.log(error))
     }
 
+
     //DOM REVIEW POST
     function buildReview(review){
         let form = document.createElement('form')
@@ -88,6 +90,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let delbtn = document.createElement('button')
         let updbtn = document.createElement('button')
 
+        form.className = 'review'
+
         rName.innerText = review.restaurant_name
         fName.innerText = review.food_name
         rReview.innerText = review.food_review
@@ -95,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updbtn.innerText = 'UPDATE'
         delbtn.innerText = 'DELETE'
-        form.className = 'Review'
+ 
 
         ul.append(rName, fName, rReview, userN)
 
@@ -104,8 +108,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         main.appendChild(form)
 
-
+        delbtn.addEventListener('click',(e) => deleteRev(e, review.id))
     }
+
+    function deleteRev(e, review_id){
+     e.preventDefault()
+     fetch(REVIEW + `/${review_id}`, {
+         method: 'DELETE'
+        })
+     .then(resp => resp.json())
+     .then(() => {
+        let oldRev = document.querySelector('.review')
+        oldRev.remove()
+     })
+    }
+
 
 })
 
