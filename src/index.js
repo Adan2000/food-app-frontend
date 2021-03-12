@@ -16,6 +16,18 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         })
     }
+
+    function getUsers(){
+        fetch(USER_URL)
+        .then(resp => resp.json())
+        .then(users => {
+            users.forEach(user => {
+                buildDrop(user)
+            })
+        })
+    }
+
+    getUsers()
     getReviews()
 
     //SUBMIT FORM
@@ -36,10 +48,25 @@ document.addEventListener('DOMContentLoaded', () => {
         let review = {
             "restaurant_name": e.target.restaurant.value,
             "food_name": e.target.food.value,
-            "food_review": e.target.review.value, 
+            "food_review": e.target.review.value,
+            "user_id": e.target.users.value
         }
+        console.log()
         postReview(review)
     }
+
+
+    function buildDrop(user) {
+        let dropdown = document.getElementById('users')
+            let options = document.createElement('option')
+            options.innerText = user.name
+            options.value = user.id
+            dropdown.appendChild(options)
+    }
+
+
+
+
     //SETTING USER VALUES
     function userF(e){
         e.preventDefault()
@@ -113,13 +140,14 @@ document.addEventListener('DOMContentLoaded', () => {
         let restName = document.createElement('h2')
         let foodName = document.createElement('h3')
         let delbtn = document.createElement('button')
+        let usern = document.createElement('h3')
 
-
+        usern.innerText = `from: ${review.user.name}`
         restName.innerText = review.restaurant_name
         foodName.innerText = review.food_name
         delbtn.innerText = 'DELETE'
- 
-
+        
+    
  
 
         delbtn.addEventListener('click',(e) => deleteRev(e, review.id))
@@ -139,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         subbtn.type = "submit"
         subbtn.value = "Submit"
 
-        updForm.append(restName, foodName, restinput, subbtn)
+        updForm.append(restName, foodName, restinput, subbtn, usern)
         main.append(updForm, delbtn)
 
         updForm.addEventListener('submit', (event) => updateRev(event, review.id))
