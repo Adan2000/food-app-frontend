@@ -140,26 +140,25 @@ document.addEventListener('DOMContentLoaded', () => {
         let restName = document.createElement('h2')
         let foodName = document.createElement('h3')
         let delbtn = document.createElement('button')
-        let usern = document.createElement('h3')
+        let userName = document.createElement('h3')
 
-        usern.innerText = `from: ${review.user.name}`
+        userName.innerText = `from: ${review.user.name}`
         restName.innerText = review.restaurant_name
         foodName.innerText = review.food_name
         delbtn.innerText = 'DELETE'
         
-    
- 
-
         delbtn.addEventListener('click',(e) => deleteRev(e, review.id))
 
+
+
+
+        //UPDATE FORM
 
 
         let updForm = document.createElement('form')
         let restinput = document.createElement('textarea')
         let subbtn = document.createElement('input')
 
-
-        //UPDATE FORM
         updForm.className = 'review'
 
         restinput.innerText = review.food_review
@@ -167,8 +166,8 @@ document.addEventListener('DOMContentLoaded', () => {
         subbtn.type = "submit"
         subbtn.value = "Submit"
 
-        updForm.append(restName, foodName, restinput, subbtn, usern)
-        main.append(updForm, delbtn)
+        updForm.append(restName, foodName, restinput, subbtn, userName, delbtn)
+        main.append(updForm)
 
         updForm.addEventListener('submit', (event) => updateRev(event, review.id))
     }
