@@ -1,8 +1,4 @@
 
-main {
-    text-align: center;
-}
-
 h1 {
     color:blue;
     text-align: center;
@@ -11,3 +7,28 @@ h1 {
 form {
     text-align: center;
 }
+
+
+  html{
+      height: 100vh;
+      background: linear-gradient(to bottom, #7927b2, #fb3182);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+
+.user-name{
+    padding-top: 5em;
+}
+
+.submit {
+      text-align: center;
+      padding-top: 4em;
+
+}
+
+main {
+    padding-top: 1em;  
+    text-align: center;
+}
+
