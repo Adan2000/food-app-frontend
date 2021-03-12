@@ -86,68 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
             body: JSON.stringify(user)
         })
         .then(res => res.json())
+        .then(res => console.log(res))
         .catch(error => console.log(error))
     }
 
-
-    //DOM REVIEW POST
-    function buildReview(review){
-        // let form = document.createElement('form')
-        let div = document.createElement('div')
-        let rName = document.createElement('h2')
-        let fName = document.createElement('h3')
-        // let rReview = document.createElement('textarea')
-        // let userN = document.createElement('h4')
-
-        let delbtn = document.createElement('button')
-        // // let updbtn = document.createElement('button')
-
-        // form.className = 'review'
-
-        rName.innerText = review.restaurant_name
-        fName.innerText = review.food_name
-        // rReview.innerText = review.food_review
-        // userN.innerText = review.user.name
-
-        // updbtn.innerText = 'UPDATE'
-        delbtn.innerText = 'DELETE'
- 
-
-        // ul.append(rName, fName, rReview, userN)
-
-        // form.appendChild(ul)
-        // form.append(delbtn) //updbtn
-
-        // main.appendChild(form)
-
- 
-
-        delbtn.addEventListener('click',(e) => deleteRev(e, review.id))
-
-        // updbtn.addEventListener('click', (e) => updateRev(e, review.id))
-
-        let updForm = document.createElement('form')
-        // let rlabel = document.createElement('label')
-        let rinput = document.createElement('textarea')
-        let subinput = document.createElement('input')
-
-
-        //UPDATE FORM
-        updForm.className = 'review'
-        // updForm.id = review.id
-
-        rinput.innerText = review.food_review
-        rinput.name = "name"
-        subinput.type = "submit"
-        subinput.value = "Submit"
-
-        updForm.append(rName, fName, rinput, subinput)
-        main.append(updForm, delbtn)
-
-        updForm.addEventListener('submit', (event) => updateRev(event, review.id))
-        // console.log(review.id)
-    }
-    //PATCH REVIEW
+        //PATCH REVIEW
     function updateRev(e, id){
         e.preventDefault()
         const newReview = e.target[0].value
@@ -163,6 +106,45 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(res => res.json())
     }
+
+    //DOM REVIEW POST
+    function buildReview(review){
+
+        let restName = document.createElement('h2')
+        let foodName = document.createElement('h3')
+        let delbtn = document.createElement('button')
+
+
+        restName.innerText = review.restaurant_name
+        foodName.innerText = review.food_name
+        delbtn.innerText = 'DELETE'
+ 
+
+ 
+
+        delbtn.addEventListener('click',(e) => deleteRev(e, review.id))
+
+
+
+        let updForm = document.createElement('form')
+        let restinput = document.createElement('textarea')
+        let subbtn = document.createElement('input')
+
+
+        //UPDATE FORM
+        updForm.className = 'review'
+
+        restinput.innerText = review.food_review
+        restinput.name = "name"
+        subbtn.type = "submit"
+        subbtn.value = "Submit"
+
+        updForm.append(restName, foodName, restinput, subbtn)
+        main.append(updForm, delbtn)
+
+        updForm.addEventListener('submit', (event) => updateRev(event, review.id))
+    }
+
 
 })
 
