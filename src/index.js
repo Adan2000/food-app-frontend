@@ -64,9 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
             dropdown.appendChild(options)
     }
 
-
-
-
     //SETTING USER VALUES
     function userF(e){
         e.preventDefault()
@@ -149,12 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         delbtn.addEventListener('click',(e) => deleteRev(e, review.id))
 
-
-
-
         //UPDATE FORM
-
-
         let updForm = document.createElement('form')
         let restinput = document.createElement('textarea')
         let subbtn = document.createElement('input')
