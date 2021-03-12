@@ -64,6 +64,18 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => console.log(error))
     }
+    //DELETE(REVIEW)
+    function deleteRev(e, review_id){
+        e.preventDefault()
+        fetch(REVIEW + `/${review_id}`, {
+            method: 'DELETE'
+            })
+        .then(resp => resp.json())
+        .then(() => {
+            let oldRev = document.querySelector('.review')
+            oldRev.remove()
+        })
+        }
     //POST (USER)
     function saveUser(user){
         fetch(USER_URL, {
@@ -80,49 +92,77 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //DOM REVIEW POST
     function buildReview(review){
-        let form = document.createElement('form')
-        let ul = document.createElement('ul')
+        // let form = document.createElement('form')
+        let div = document.createElement('div')
         let rName = document.createElement('h2')
         let fName = document.createElement('h3')
-        let rReview = document.createElement('textarea')
-        let userN = document.createElement('h4')
+        // let rReview = document.createElement('textarea')
+        // let userN = document.createElement('h4')
 
         let delbtn = document.createElement('button')
-        let updbtn = document.createElement('button')
+        // // let updbtn = document.createElement('button')
 
-        form.className = 'review'
+        // form.className = 'review'
 
         rName.innerText = review.restaurant_name
         fName.innerText = review.food_name
-        rReview.innerText = review.food_review
-        userN.innerText = review.user.name
+        // rReview.innerText = review.food_review
+        // userN.innerText = review.user.name
 
-        updbtn.innerText = 'UPDATE'
+        // updbtn.innerText = 'UPDATE'
         delbtn.innerText = 'DELETE'
  
 
-        ul.append(rName, fName, rReview, userN)
+        // ul.append(rName, fName, rReview, userN)
 
-        form.appendChild(ul)
-        form.append(updbtn, delbtn)
+        // form.appendChild(ul)
+        // form.append(delbtn) //updbtn
 
-        main.appendChild(form)
+        // main.appendChild(form)
+
+ 
 
         delbtn.addEventListener('click',(e) => deleteRev(e, review.id))
-    }
 
-    function deleteRev(e, review_id){
-     e.preventDefault()
-     fetch(REVIEW + `/${review_id}`, {
-         method: 'DELETE'
+        // updbtn.addEventListener('click', (e) => updateRev(e, review.id))
+
+        let updForm = document.createElement('form')
+        // let rlabel = document.createElement('label')
+        let rinput = document.createElement('textarea')
+        let subinput = document.createElement('input')
+
+
+        //UPDATE FORM
+        updForm.className = 'review'
+        // updForm.id = review.id
+
+        rinput.innerText = review.food_review
+        rinput.name = "name"
+        subinput.type = "submit"
+        subinput.value = "Submit"
+
+        updForm.append(rName, fName, rinput, subinput)
+        main.append(updForm, delbtn)
+
+        updForm.addEventListener('submit', (event) => updateRev(event, review.id))
+        // console.log(review.id)
+    }
+    //PATCH REVIEW
+    function updateRev(e, id){
+        e.preventDefault()
+        const newReview = e.target[0].value
+        const updateR = {
+            "food_review": newReview
+        }
+        fetch(REVIEW + `/${id}`,{
+            method: 'PATCH',
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify(updateR)
         })
-     .then(resp => resp.json())
-     .then(() => {
-        let oldRev = document.querySelector('.review')
-        oldRev.remove()
-     })
+        .then(res => res.json())
     }
-
 
 })
 
