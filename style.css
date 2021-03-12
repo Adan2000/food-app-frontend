@@ -36,9 +36,13 @@ form {
     font-size: 15px;
 }
 
+.user-name button:hover {
+    background-color: burlywood;
+}
+
 
 main form button {  
-    background-color: red;
+    background-color: rgb(207, 31, 31);
     border: none;
     color:black;
     padding: 8px 10px;
@@ -46,6 +50,10 @@ main form button {
     text-decoration: none;
     display: inline-block;
     font-size: 15px;
+}
+
+main form button:hover {
+    background-color:rgb(189, 64, 64);
 }
 
 .submit button {
@@ -59,6 +67,9 @@ main form button {
     font-size: 15px;
 }
 
+.submit button:hover {
+    background-color: burlywood;
+}
 .submit {
     padding-top: 5em;
     padding: 5px;
@@ -70,10 +81,12 @@ main form button {
 .review {
     padding-top: 5em;
     padding: 20px;
+    padding-bottom: 10px;
     border: 2px solid black;
     margin-bottom: 10px;
     margin-top: 10px;
-
+    background-color:  rgba(255, 0, 0, 0.144);
+    box-shadow: 10px 5px;
 }
 
 .review input {
